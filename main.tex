@@ -112,4 +112,148 @@ Une entité faible n'a aucune clef ne dépendant que de ses propres attributs, e
 a donc une \textbf{clef partielle} qui la distingue des autres entités ayant la
 même clef étrangère.
 
+\paragraph{Intérêt des entités faibles}
+\begin{itemize}
+  \item Suppression des attributs redondants
+  \item Réduction des relation n-aires en relations binaires par la méthode d'insertion
+  \item Héritage et polymorphisme (ajout des attributs des entités filles dans des entités faibles)
+\end{itemize}
+
+\subsection{Relation génériques}
+\'Equivalent des design pattern pour les relations. Elle dénotent la nature d'une
+relation sur un schéma entité-relation.
+
+\subsubsection{Classification}
+Utilisée lorsqu'on instancie un objet. Exemple: on a une liste de destinations
+au départ d'un aéroport (classe), et les vols chaque jour vers ces destinations (instance).
+
+\subsubsection{Généralisation (héritage)}
+Relation spéciale entre une ou plusieurs sous-entités et une superentité, plus abstraite.
+
+\begin{figure}[h!]
+    \center
+    \includegraphics[width=.3\textwidth]{fig/generalisation.png}
+    \caption{Généralisation}
+\end{figure}
+
+\paragraph{Différent types de recouvrements}
+\begin{itemize}
+  \item \textbf{Partiel} ou \textbf{Total}: les entité filles ont-elles des attributs de la superentité ?
+  \item \textbf{Exclusif} ou \textbf{Recouvrant (overlapping)}: les entités filles partagent-elles des attributs ?
+  \item La spécialisation peut être déterminée par un prédicat (ex: \texttt{Person.age < 18 -> Child})
+  \item Les clefs sont héritées, et de nouvelles clefs peuvent être définies par les entités filles
+\end{itemize}
+\begin{figure}[h!]
+    \center
+    \includegraphics[width=.6\textwidth]{fig/generalisation-cov.png}
+    \caption{Combinaisons de recouvrements partiels et totaux, exclusifs et recouvrants}
+\end{figure}
+
+Les contraintes de recouvrement influencent l'implémentation.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Modèle relationnel}
+Données structurées en tables bidimensionnels de valeurs simples. Les lignes
+sont aussi appelées tuples, et les colonnes attributs.
+Les relations sont des tables avec des restrictions:
+\begin{itemize}
+  \item L'ordre des lignes n'a pas d'importance
+  \item L'ordre des colonnes n'a pas d'importance
+  \item La table a au moins une clef (pas de lignes en double exemplaire)
+\end{itemize}
+La relation peut être vue comme un prédicat, par exemple comme un ensemble de propriétés.
+
+Les bases de données sont des collections de relations, mais ne pas oublier que
+les structures relationnelles sont plus riches que les tables, et que le modèle de 
+données ne définit pas que les structures de données, mais aussi des opérations
+pour les manipuler.
+
+\subsection{Schéma}
+On parle du schéma pour décrire le modèle des données (le nom des colonnes).
+
+\begin{figure}[h!]
+    \center
+    \includegraphics[width=.5\textwidth]{fig/relmodel-er.png}
+    \caption{\label{fig:relmodel-er}Un modèle Entité-Relation}
+\end{figure}
+\begin{figure}[h!]
+    \center
+    \includegraphics[width=.7\textwidth]{fig/relmodel-tuples.png}
+    \caption{Les tuples correspondant au schéma Figure \ref{fig:relmodel-er}}
+\end{figure}
+
+Lors de la traduction du modèle entité-relation en modèle relationnel, on voit
+que toutes les relations ne sont pas matérialisées par une table (par exemple,
+un \texttt{Department} contient directement la clef de son manager et sa date d'entrée en service),
+et que certaines tables ne sont pas modélisées par une entité ou une relation, mais
+par un attribut multivalué (\texttt{Department.location})
+
+\subsection{Relations}
+Le schéma auquel on adjoint les valeurs donnent une relation. Plus formellement, on a
+\begin{equation}
+  R(A_1:D_1, ~ ... ~ , A_n:D_n)
+\end{equation}
+Où $R$ est la relation, les $D_i$ sont un ensemble de valeurs atomiques appelées le \textbf{domaine},
+les attributs $A_i$ sont distincts dans la relation. $A_i : D_i$ dénote la structure de la relation.
+\'Etant donné un tuple\footnote{un ensemble de paires attribut:valeur} $\{A_1: d_1, ~...~, A_n: d_n\}$, on a la valeur relationelle
+\begin{equation}
+  \rho \subseteq \{\{A_1:d_1, ~...~, A_n:d_n\} \mid d_i \in D_i\}
+\end{equation}
+
+Le domaine définit la comparabilité des valeurs: des attributs ne peuvent être comparés
+que s'ils sont sur le même domaine. On peut voir le domaine comme des types définis par
+l'utilisateur.
+
+\subsection{Contraintes relationnelles}
+Les contraintes font parties du schéma, et spécifient des prescriptions ou
+assertions sur les données. Elles permettent de garantir l'intégrité des données.
+
+\subsubsection{Intégrité référentielle}
+\'Etant donné une contrainte relationelle sur $R_1$ et $R_2$, $\exists$ un attribut
+$A_2$ de $R_2$ tq. $A_2$ a le même domaine que la clef primaire de $R_1$ et toute
+valeur de $A_2$ dans un tuple de $R_2$ apparaît comme clef primaire dans le tuple
+de $R_1$. On appelle $A_2$ une clef étrangère. $A_2$ n'est pas forcément une clef
+de $R_2$
+
+\begin{figure}[h!]
+    \center
+    \includegraphics[width=.7\textwidth]{fig/integrite-rel.png}
+    \caption{Intégrité référentielle du schéma Figure \ref{fig:relmodel-er}}
+\end{figure}
+
+\subsubsection{Contraintes transitionelles}
+On impose une contrainte sur la mise à jour de la valeur d'un attribut (exemple:
+une personne ne peut pas changer de sexe, un salaire ne peut qu'augmenter...)
+
+\subsubsection{Contraintes structurelles}
+\paragraph{Intégrité de la clef}
+Toute relation a une clef primaire et éventuellement d'autres clefs
+
+\paragraph{Intégrité de domaine}
+Les valeurs des attributs doivent correspondre au domaine (type et opérations permises)
+
+\paragraph{Intégrité de l'entité}
+Les clefs primaires ne sont pas nulles
+
+\paragraph{Intégrité de colonne}
+Une contrainte spécifique imposée sur une colonne (ex: la date est supérieure à l'an 2000)
+
+\paragraph{Intégrité de ligne}
+Contrainte sur un tuple en particulier (ex: la date de retraite doit être postérieure
+à la date de premier emploi).
+
+\subsection{Implémentation dans les DBMS}
+Un DMS a donc:
+\paragraph{Un langage de définition des données} permettant de créer le schéma
+\paragraph{Un langage de manipulation des données (DML)} pour accéder aux valeurs.
+Par exemple, l'algèbre relationelle ou le calcul tuple. SQM redéfinit les opérations
+correspondantes et définit quelques extensions (les fonctions d'aggrégation par exemple).
+\paragraph{Des opération d'altération} permettant de modifier ou supprimer des valeurs et des schémas.
+Ces opérations doivent tenir compte des contraintes (en émettant une erreur si l'une d'elle est violée par exemple).
+\paragraph{Des vues (éventuellement)} décrivant des relations dérivées
+(relations inférées à partir d'autres). Elles peuvent être enregistrées sur le
+disque (snapshots), mais ça peut poser des problème de redondance.
+
 \end{document}
