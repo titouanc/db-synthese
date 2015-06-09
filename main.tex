@@ -261,10 +261,39 @@ disque (snapshots), mais ça peut poser des problème de redondance.
 \paragraph{Tout dans la superentité}
 Tous les champs de toutes les entités filles sont dans la superentité. Les attributs
 inexistants pour une entité fille sont nuls.
-
+\subparagraph{Avantage}
+Facile et rapide à mettre en place, toujours utilisable.
+\subparagraph{Inconvénients}
+Gaspillage d'espace (beaucoup d'attributs nuls), les opérations sur les entités
+filles doivent être exprimée sur la superentit (programme plus complexe).
 \begin{figure}[h!]
     \center
     \includegraphics[width=.7\textwidth]{fig/er2rm-1.png}
+\end{figure}
+
+\paragraph{Garder les entités filles}
+On ne crée que les entités feuilles dans l'arbre d'héritage, il n'existe pas de
+table pour la superentité. Chaque entité fille contient ses attributs propres et
+ceux de sa superentité. \textbf{Il faut garantir avec une contrainte que les
+clefs sont uniques parmis l'ensemble de toutes les entités filles.}
+\subparagraph{Inconvénients}
+Beaucoup d'attribut redondants et de relations, rendant les applications plus complexes.
+Utilisable avec les relations totales-exclusives uniquement.
+\begin{figure}[h!]
+    \center
+    \includegraphics[width=.9\textwidth]{fig/er2rm-2.png}
+\end{figure}
+
+\paragraph{Transformation en relations}
+Une table pour chaque entité. On crée une relation one-to-one entre une entité
+et sa superentité. Les filles sont des entités faibles.
+\subparagraph{Inconvénients}
+Redondance (beaucoup de relations signifient la même chose), il faut des contraintes
+pour exprimer le type de généralisation (recouvrement). Les opération deviennent plus
+complexes (en O(n) de la profondeur de l'arbre d'héritage).
+\begin{figure}[h!]
+    \center
+    \includegraphics[width=.9\textwidth]{fig/er2rm-3.png}
 \end{figure}
 
 \paragraph{Traduction des entités et relations en tables} les attributs deviennent
