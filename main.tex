@@ -6,6 +6,7 @@
 \usepackage{fullpage}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{float}
 
 \author{Titouan \bsc{Christophe}}
 \title{Synthèse de bases de données}
@@ -20,7 +21,7 @@ Un schéma conceptuel des données, pas forcément implémenté de cette façon.
 Selon le contexte, désigne la classe (modèle) ou l'objet (l'instance).
 
 \subsection{Entité}
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.3\textwidth]{fig/entity.png}
     \caption{Une entité}
@@ -51,12 +52,12 @@ Seule l'une des clefs peut être soulignée, et est l'identifiant d'un objet pou
 cette entité.
 
 \subsection{Relation}
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.4\textwidth]{fig/relation.png}
     \caption{\label{fig:relation}Une relation One-to-many}
 \end{figure}
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.3\textwidth]{fig/relation-ensembliste.png}
     \caption{Vue ensembliste de la relation à la Figure \ref{fig:relation}}
@@ -77,14 +78,14 @@ les liens entre plusieurs objets, et un attribut quand c'est une propriété com
 \subsubsection{Relation n-aire}
 Une relation n-aire implique plus que 2 entités différentes.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.4\textwidth]{fig/relation-naire.png}
     \caption{Une relation ternaire et sa vue ensembliste}
 \end{figure}
 
 \subsubsection{Transformation des relation n-aires en binaires}
-Les relations obtenues après transformation contiennent moins d'information
+Les relations obtenues après transformation \textbf{par projection} contiennent moins d'information
 que la relation initiale. Par exemple, dans la Figure \ref{fig:relation-naire-projection},
 on voit que la relation ternaire indique qu'un fournisseur délivre un produit pour un projet,
 tandis que les relations binaires indiquent uniquement qu'un fournisseur délivre un produit,
@@ -92,7 +93,7 @@ qu'un projet utilise un produit, et qu'un projet utilise un fournisseur.
 
 \paragraph{Projection}
 On crée une relation pour chaque paire possible de la relation
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.4\textwidth]{fig/relation-naire-projection.png}
     \caption{\label{fig:relation-naire-projection}Projection d'une relation ternaire}
@@ -101,7 +102,7 @@ On crée une relation pour chaque paire possible de la relation
 \paragraph{Insertion}
 On transforme la relation en entité, et on la lie par des relations binaires à
 toutes les entités de la relation initiale.
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.6\textwidth]{fig/relation-naire-insertion.png}
     \caption{Transformation par insertion}
@@ -130,7 +131,7 @@ au départ d'un aéroport (classe), et les vols chaque jour vers ces destination
 \subsubsection{Généralisation (héritage)}
 Relation spéciale entre une ou plusieurs sous-entités et une superentité, plus abstraite.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.3\textwidth]{fig/generalisation.png}
     \caption{Généralisation}
@@ -143,7 +144,7 @@ Relation spéciale entre une ou plusieurs sous-entités et une superentité, plu
   \item La spécialisation peut être déterminée par un prédicat (ex: \texttt{Person.age < 18 -> Child})
   \item Les clefs sont héritées, et de nouvelles clefs peuvent être définies par les entités filles
 \end{itemize}
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.6\textwidth]{fig/generalisation-cov.png}
     \caption{Combinaisons de recouvrements partiels et totaux, exclusifs et recouvrants}
@@ -173,12 +174,12 @@ pour les manipuler.
 \subsection{Schéma}
 On parle du schéma pour décrire le modèle des données (le nom des colonnes).
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.5\textwidth]{fig/relmodel-er.png}
     \caption{\label{fig:relmodel-er}Un modèle Entité-Relation}
 \end{figure}
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.7\textwidth]{fig/relmodel-tuples.png}
     \caption{Les tuples correspondant au schéma Figure \ref{fig:relmodel-er}}
@@ -206,6 +207,18 @@ Le domaine définit la comparabilité des valeurs: des attributs ne peuvent êtr
 que s'ils sont sur le même domaine. On peut voir le domaine comme des types définis par
 l'utilisateur.
 
+\subsection{Clefs de relation}
+
+\paragraph{Une super-clef} désigne un ou plusieurs attributs qui, ensemble, identifient
+un et un seul tuple.
+
+\paragraph{Une clef} est une super-clef minimale (si un seul des attributs est
+enlevé de la super-clef minimale, elle perd sa propriété d'identification unique).
+Généralement, une relation a plusieurs clefs, qu'on appelle aussi clefs candidates.
+
+\paragraph{La clef primaire} est une clef choisie parmi les clefs candidates comme étant
+la seule qu'on utilisera pour identifier un tuple.
+
 \subsection{Contraintes relationnelles}
 Les contraintes font parties du schéma, et spécifient des prescriptions ou
 assertions sur les données. Elles permettent de garantir l'intégrité des données.
@@ -217,7 +230,7 @@ valeur de $A_2$ dans un tuple de $R_2$ apparaît comme clef primaire dans le tup
 de $R_1$. On appelle $A_2$ une clef étrangère. $A_2$ n'est pas forcément une clef
 de $R_2$
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.7\textwidth]{fig/integrite-rel.png}
     \caption{Intégrité référentielle du schéma Figure \ref{fig:relmodel-er}}
@@ -244,9 +257,19 @@ Une contrainte spécifique imposée sur une colonne (ex: la date est supérieure
 Contrainte sur un tuple en particulier (ex: la date de retraite doit être postérieure
 à la date de premier emploi).
 
+\subsubsection{Suppression d'un tuple}
+Quand la suppression d'un tuple viole une contrainte d'intégrité référentielle,
+il faut exécuter une des actions suivantes :
+\begin{itemize}
+  \item rejeter la suppression
+  \item propager la suppression aux tuples qui référencent le tuple supprimé
+  \item nullifier les valeurs d'attributs des tuples qui référencent le tuple supprimé,
+  sauf si ces attributs font partie de la clé primaire
+\end{itemize}
+
 \subsection{Implémentation dans les DBMS}
-Un DMS a donc:
-\paragraph{Un langage de définition des données} permettant de créer le schéma
+Un DBMS a donc:
+\paragraph{Un langage de définition des données (DDL)} permettant de créer le schéma
 \paragraph{Un langage de manipulation des données (DML)} pour accéder aux valeurs.
 Par exemple, l'algèbre relationelle ou le calcul tuple. SQM redéfinit les opérations
 correspondantes et définit quelques extensions (les fonctions d'aggrégation par exemple).
@@ -266,7 +289,7 @@ Facile et rapide à mettre en place, toujours utilisable.
 \subparagraph{Inconvénients}
 Gaspillage d'espace (beaucoup d'attributs nuls), les opérations sur les entités
 filles doivent être exprimée sur la superentit (programme plus complexe).
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.7\textwidth]{fig/er2rm-1.png}
 \end{figure}
@@ -279,7 +302,7 @@ clefs sont uniques parmis l'ensemble de toutes les entités filles.}
 \subparagraph{Inconvénients}
 Beaucoup d'attribut redondants et de relations, rendant les applications plus complexes.
 Utilisable avec les relations totales-exclusives uniquement.
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.9\textwidth]{fig/er2rm-2.png}
 \end{figure}
@@ -291,7 +314,7 @@ et sa superentité. Les filles sont des entités faibles.
 Redondance (beaucoup de relations signifient la même chose), il faut des contraintes
 pour exprimer le type de généralisation (recouvrement). Les opération deviennent plus
 complexes (en O(n) de la profondeur de l'arbre d'héritage).
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.9\textwidth]{fig/er2rm-3.png}
 \end{figure}
