@@ -283,7 +283,11 @@ disque (snapshots), mais ça peut poser des problème de redondance.
 \subsubsection{Suppression des généralisations}
 \paragraph{Tout dans la superentité}
 Tous les champs de toutes les entités filles sont dans la superentité. Les attributs
-inexistants pour une entité fille sont nuls.
+inexistants pour une entité fille sont nuls. On rajoute un champ pour déterminer
+le type d'enfant du tuple (dans l'exemple ci-dessous, \texttt{Rank}).\\
+
+Il faut parfois également rajouter des contraintes (ci-dessous, par exemple :
+seulement les étudiants avec \texttt{Rank == GradStud} ont un advisor).
 \subparagraph{Avantage}
 Facile et rapide à mettre en place, toujours utilisable.
 \subparagraph{Inconvénients}
