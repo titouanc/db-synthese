@@ -418,7 +418,71 @@ relations et qui produisent une relation en sortie.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Calcul tuple/relationnel}
+\section{Calcul relationnel}
+  Cette section traite de la structure logique des Relational Query Languages.
+  On utilise la logique du premier ordre.\\
+
+  \subsection{Calcul relationnel tuple}
+  La structure générale d'une requête en calcul tuple relationnel est :
+  $$ \{t_1.A_1, t_2.A_2,...,t_n.A_n\; | \; F(t_1, ... t_n,t_{n+1},...t_{m})\} $$
+  avec :
+  \begin{itemize}
+    \item $t_1, t_2,...t_m$ les variables tuple associées à $F$ avec une relation
+    via un prédicat de relation\footnote{wat}
+    \item $A_i$ : les attributs de la relation associée à $t_i$
+    \item F : la formule logique qui contient $t_1,...,t_m$
+    \item $t_1,...;t_n$ les variables libres de F ("variables de query")
+    \item $t_{n+1},...,t_m$ les variables quantifiées dans F
+  \end{itemize}
+
+  \subsubsection{Quantificateur existentiel}
+  Voici un join (le quantificateur existentiel est généralement utilisé pour les
+  join) :
+  \begin{align*}
+    \{e.Lname, e.Address\; | \; &Employee(e)\\
+    &\land\, \exists d (Department(d) \,\land\, d.Manager = 'KrazyBen'\, \land\, d.DNumber = e.DNo)\} )
+  \end{align*}
+
+  \subsubsection{Quantificateur universel}
+  Il doit toujours être associé avec l'implication. Pourquoi? Prenons l'exemple
+  de cours prérequis. On veut tous les étudiants qui ont passé les prérequis
+  de Plasticine. Si on a cette formule : $\forall p (Prereq(p) \land \exists etudiant ...$ et que Plasticine n'a aucun prérequis, la formule renvoie un ensemble
+  vide alors que tous les étudiants ont passé les "aucun" prérequis.
+  \begin{align*}
+    \{e.Lname\; | \; &Employee(e)\\
+    &\land\, \forall d (Dependent(d) \,\rightarrow\, e.SSN = d.ESSN)\} )
+  \end{align*}
+
+  \subsection{Calcul relationnel domaine}
+  La structure générale d'une requête en calcul relationnel domaine est :
+  $$ \{x_1, s_2,...,x_n\; | \; F(x_1, ... x_n,x_{n+1},...x_{m})\} $$
+  avec $R(A_i:x_i,...A_j:x_j)$.
+
+  \subsubsection{Quantificateur existentiel}
+  Voici un exemple simple :
+  \begin{align*}
+    \{fn, ln\; |\; &\exists fn, ln & \\
+    &\quad(Employee(FName:fn, LName:ln)\\
+    &\quad\quad\land\;fn='Krazy'\\
+    &\quad\quad\land\; ln='Ben')\}
+  \end{align*}
+  Plutôt que d'"assigner" tous les champs et d'écrire une condition dessus,
+  si on n'a besoin d'un champ que pour une condition, on peut écrire ceci :
+  \begin{align*}
+    \{fn\; |\; &\exists fn & \\
+    &\quad(Employee(FName:fn, LName:'Ben')\\
+    &\quad\quad\land\;fn='Krazy')\}
+  \end{align*}
+  Voici un exemple dans le cas d'un join (nom et addresse de tous les employés
+  du département plasticine):
+  \begin{align*}
+    \{fn, ln, a\; |\; &\exists d & \\
+    &\quad(Employee(FName:fn, LName:ln, Address:a, DNo:d)\\
+    &\quad\land\;(Department(DName:'Plasticine', DNumber:d)))\}
+  \end{align*}
+
+  \paragraph{Quantificateur universel}
+  Il fonctionne de la même manière qu'en calcul tuple relationnel.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
