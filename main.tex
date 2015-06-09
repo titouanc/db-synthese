@@ -384,6 +384,38 @@ relations et qui produisent une relation en sortie.
   d'une autre relation. Puisque tous les attributs de chaque relation se retrouvent
   dans le résultat, si certains attributs ont les mêmes noms, il faut les renommer.
 
+  \subsection{Jointure}
+  La jointure (aussi appelée jointure $\theta$) n'est en fait qu'un produit cartésien suivi d'une sélection. 
+  La condition exprimée sur la jointure est effectivement la condition de la sélection.
+
+  $$R \bowtie_{condition} S = \{concat(r,s)\; |\; r \in R\; \land \; s \in S\; \land \; condition(r,s)\} $$
+
+  N'oublions pas que certains attributs de R ou de S pourraient devoir être renommés.
+
+  \paragraph{Jointure naturelle} $R \bowtie S$ : pour tous les attributs qui se trouvent en même temps dans R et dans S, on garde les tuples qui ont les mêmes 
+  valeurs pour ces attributs dans R et dans S.
+
+  \paragraph{Equijoin} $R \bowtie_{A=B} S$ : Jointure $\theta$ avec une seule 
+  condition qui est une égalité.
+
+  \paragraph{Left, Right et Full Outer Join} Flemme de faire le symbole en \LaTeX,
+  il faut rajouter deux petits traits horizontaux à gauche, à droite ou au deux
+  côtés.
+
+  \subsection{Division}
+  $$ R(A,B)\; \div\; S(B) $$
+  Tous les tuples de $\pi_{A}(R)$ qui apparaissent dans R avec au moins chaque
+  élément de S.
+
+  \begin{figure}[H]
+    \center
+    \includegraphics[width=.25\textwidth]{fig/relalg-division.png}
+  \end{figure}
+
+  \subsection{Outer Union}
+  Si R et S sont partiellement compatibles, l'outer union garde tous les attributs
+  et le annule s'ils ne sont pas applicables pour ce tuple.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Calcul tuple/relationnel}
