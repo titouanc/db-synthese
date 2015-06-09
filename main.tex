@@ -257,6 +257,16 @@ Une contrainte spécifique imposée sur une colonne (ex: la date est supérieure
 Contrainte sur un tuple en particulier (ex: la date de retraite doit être postérieure
 à la date de premier emploi).
 
+\subsubsection{Suppression d'un tuple}
+Quand la suppression d'un tuple viole une contrainte d'intégrité référentielle,
+il faut exécuter une des actions suivantes :
+\begin{itemize}
+  \item rejeter la suppression
+  \item propager la suppression aux tuples qui référencent le tuple supprimé
+  \item nullifier les valeurs d'attributs des tuples qui référencent le tuple supprimé,
+  sauf si ces attributs font partie de la clé primaire
+\end{itemize}
+
 \subsection{Implémentation dans les DBMS}
 Un DMS a donc:
 \paragraph{Un langage de définition des données (DDL)} permettant de créer le schéma
