@@ -6,6 +6,7 @@
 \usepackage{fullpage}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{float}
 
 \author{Titouan \bsc{Christophe}}
 \title{Synthèse de bases de données}
@@ -20,7 +21,7 @@ Un schéma conceptuel des données, pas forcément implémenté de cette façon.
 Selon le contexte, désigne la classe (modèle) ou l'objet (l'instance).
 
 \subsection{Entité}
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.3\textwidth]{fig/entity.png}
     \caption{Une entité}
@@ -51,12 +52,12 @@ Seule l'une des clefs peut être soulignée, et est l'identifiant d'un objet pou
 cette entité.
 
 \subsection{Relation}
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.4\textwidth]{fig/relation.png}
     \caption{\label{fig:relation}Une relation One-to-many}
 \end{figure}
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.3\textwidth]{fig/relation-ensembliste.png}
     \caption{Vue ensembliste de la relation à la Figure \ref{fig:relation}}
@@ -77,7 +78,7 @@ les liens entre plusieurs objets, et un attribut quand c'est une propriété com
 \subsubsection{Relation n-aire}
 Une relation n-aire implique plus que 2 entités différentes.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.4\textwidth]{fig/relation-naire.png}
     \caption{Une relation ternaire et sa vue ensembliste}
@@ -92,7 +93,7 @@ qu'un projet utilise un produit, et qu'un projet utilise un fournisseur.
 
 \paragraph{Projection}
 On crée une relation pour chaque paire possible de la relation
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.4\textwidth]{fig/relation-naire-projection.png}
     \caption{\label{fig:relation-naire-projection}Projection d'une relation ternaire}
@@ -101,7 +102,7 @@ On crée une relation pour chaque paire possible de la relation
 \paragraph{Insertion}
 On transforme la relation en entité, et on la lie par des relations binaires à
 toutes les entités de la relation initiale.
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.6\textwidth]{fig/relation-naire-insertion.png}
     \caption{Transformation par insertion}
@@ -130,7 +131,7 @@ au départ d'un aéroport (classe), et les vols chaque jour vers ces destination
 \subsubsection{Généralisation (héritage)}
 Relation spéciale entre une ou plusieurs sous-entités et une superentité, plus abstraite.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.3\textwidth]{fig/generalisation.png}
     \caption{Généralisation}
@@ -143,7 +144,7 @@ Relation spéciale entre une ou plusieurs sous-entités et une superentité, plu
   \item La spécialisation peut être déterminée par un prédicat (ex: \texttt{Person.age < 18 -> Child})
   \item Les clefs sont héritées, et de nouvelles clefs peuvent être définies par les entités filles
 \end{itemize}
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.6\textwidth]{fig/generalisation-cov.png}
     \caption{Combinaisons de recouvrements partiels et totaux, exclusifs et recouvrants}
@@ -173,12 +174,12 @@ pour les manipuler.
 \subsection{Schéma}
 On parle du schéma pour décrire le modèle des données (le nom des colonnes).
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.5\textwidth]{fig/relmodel-er.png}
     \caption{\label{fig:relmodel-er}Un modèle Entité-Relation}
 \end{figure}
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.7\textwidth]{fig/relmodel-tuples.png}
     \caption{Les tuples correspondant au schéma Figure \ref{fig:relmodel-er}}
@@ -217,7 +218,7 @@ valeur de $A_2$ dans un tuple de $R_2$ apparaît comme clef primaire dans le tup
 de $R_1$. On appelle $A_2$ une clef étrangère. $A_2$ n'est pas forcément une clef
 de $R_2$
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.7\textwidth]{fig/integrite-rel.png}
     \caption{Intégrité référentielle du schéma Figure \ref{fig:relmodel-er}}
@@ -262,7 +263,7 @@ disque (snapshots), mais ça peut poser des problème de redondance.
 Tous les champs de toutes les entités filles sont dans la superentité. Les attributs
 inexistants pour une entité fille sont nuls.
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \center
     \includegraphics[width=.7\textwidth]{fig/er2rm-1.png}
 \end{figure}
