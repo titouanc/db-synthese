@@ -256,4 +256,19 @@ Ces opérations doivent tenir compte des contraintes (en émettant une erreur si
 (relations inférées à partir d'autres). Elles peuvent être enregistrées sur le
 disque (snapshots), mais ça peut poser des problème de redondance.
 
+\subsection{Traduction depuis un schéma E-R}
+\subsubsection{Suppression des généralisations}
+\paragraph{Tout dans la superentité}
+Tous les champs de toutes les entités filles sont dans la superentité. Les attributs
+inexistants pour une entité fille sont nuls.
+
+\begin{figure}[h!]
+    \center
+    \includegraphics[width=.7\textwidth]{fig/er2rm-1.png}
+\end{figure}
+
+\paragraph{Traduction des entités et relations en tables} les attributs deviennent
+des colonnes, faire attention aux attributs multivalués, les entité fortes et faibles.
+Les relations doivent se traduire par des 
+
 \end{document}
