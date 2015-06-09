@@ -7,6 +7,7 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{amsmath}
 
 \author{Titouan \bsc{Christophe}\\Florentin \bsc{Hennecker}}
 \title{Synthèse de bases de données}
@@ -331,6 +332,57 @@ Les relations doivent se traduire par des
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Algèbre relationnel}
+
+L'algèbre relationnel est un ensemble d'opérateurs qui agissent sur une ou plusieurs
+relations et qui produisent une relation en sortie.
+
+  \subsection{Sélection (ou restriction)}
+  On ne prend que les tuples qui satisfont une (ou plusieurs) condition(s).
+
+    $$ \sigma_{condition}(R) = \{r\in R\, |\, condition(r)\} $$
+
+  Intuition : la sélection est une tranche horizontale d'une relation. 
+
+  \subsection{Projection}
+  Garder seulement un ensemble d'attributs d'une relation.
+
+  $$ \pi_{attributs}(R) $$
+
+  Intuition : la projection est une tranche verticale d'une relation.
+
+  \paragraph{Suppression des doublons}
+  La projection fait en plus une suppression des doublons.
+
+  \subsection{Combinaison d'opérations}
+
+  \paragraph{Forme imbriquée} de type $ \pi_{FName, LName}(\sigma_{DNo<3\; \lor\; DNo=5 }(Employee))$
+
+  \paragraph{Forme séquentielle}
+  \begin{align*}
+    Temp &\leftarrow \sigma_{DNo=5}(Employee)\\
+    R(FirstName, LastName) &\leftarrow \pi_{FName, LName}(Temp)
+  \end{align*}
+
+  \subsection{Opérations ensemblistes}
+
+  \paragraph{Union} $R \cup S$ : tous les tuples dans R, dans S ou dans R et S (sans doublon)
+
+  \paragraph{Intersection} $R \cap S$ : tous les tuples dans R et dans S
+
+  \paragraph{Différence} $R - S$ : tous les tuples dans R mais pas dans S\\
+
+  Ces opérations ne se font que sur des relations dont les attributs sont
+  de même types un à un.
+
+  \subsection{Renommage}
+  Dans certains cas (voir produit cartésien), il faut renommer certains attributs
+  d'une relation. On le fait de la manière suivante :
+  $$ \alpha_{originalAttributeName:newAttributeName}(R) $$
+
+  \subsection{Produit cartésien}
+  Le produit cartésien $R \times S$ associe chaque tuple d'une relation avec tous les tuples
+  d'une autre relation. Puisque tous les attributs de chaque relation se retrouvent
+  dans le résultat, si certains attributs ont les mêmes noms, il faut les renommer.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
