@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{amsmath}
+\usepackage{color}
 
 \author{Titouan \bsc{Christophe}\\Florentin \bsc{Hennecker}}
 \title{Synthèse de bases de données}
@@ -383,7 +384,29 @@ relations et qui produisent une relation en sortie.
 
     $$ \sigma_{condition}(R) = \{r\in R\, |\, condition(r)\} $$
 
-  Intuition : la sélection est une tranche horizontale d'une relation. 
+  Intuition : la sélection est une tranche horizontale d'une relation.
+  
+  Exemple:
+  \begin{tabular}{|c|c|c|}
+	\multicolumn{3}{c}{R}\\
+	\hline
+	A & B & C\\
+	\hline\hline
+	1 & a & 1\\
+	2 & a & 1\\
+	3 & c & 2\\
+	4 & d & 2\\
+	\hline
+  \end{tabular}
+  $\rightarrow \sigma_{C=2}(R) \rightarrow$
+  \begin{tabular}{|c|c|c|}
+	\hline
+	A & B & C\\
+	\hline\hline
+	3 & c & 2\\
+	4 & d & 2\\
+	\hline
+  \end{tabular}
 
   \subsection{Projection}
   Garder seulement un ensemble d'attributs d'une relation.
@@ -392,6 +415,29 @@ relations et qui produisent une relation en sortie.
 
   Intuition : la projection est une tranche verticale d'une relation.
 
+    Exemple:
+  \begin{tabular}{|c|c|c|}
+	\multicolumn{3}{c}{R}\\
+	\hline
+	A & B & C\\
+	\hline\hline
+	1 & a & 1\\
+	2 & a & 1\\
+	3 & c & 2\\
+	4 & d & 2\\
+	\hline
+  \end{tabular}
+  $\rightarrow \pi_{B,C}(R) \rightarrow$
+  \begin{tabular}{|c|c|c|}
+	\hline
+	B & C\\
+	\hline\hline
+	a & 1\\
+	c & 2\\
+	d & 2\\
+	\hline
+  \end{tabular}
+  
   \paragraph{Suppression des doublons}
   La projection fait en plus une suppression des doublons.
 
@@ -415,16 +461,134 @@ relations et qui produisent une relation en sortie.
 
   Ces opérations ne se font que sur des relations dont les attributs sont
   de même types un à un.
+  
+  
+      Exemple:
+\begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{Student}\\
+	\hline
+	FName & LName\\
+	\hline\hline
+	Susan & Yao\\
+	Ramesh & Shah\\
+	Barbara & Jones\\
+	Amy & Ford\\
+	Jimmy & Wang\\
+	\hline
+\end{tabular}
+\begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{Prof}\\
+	\hline
+	FName & LName\\
+	\hline\hline
+	John & Smith\\
+	Ricardo & Brown\\
+	Susan  &Yao\\
+	Francis  & Johnson\\
+	Ramesh & Shah\\
+	\hline
+\end{tabular}\\
+\begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{\textcolor[rgb]{1,0,0}{Student $\cup$ Prof}}\\
+	\hline
+	FName & LName\\
+	\hline\hline
+	Susan & Yao\\
+	Ramesh & Shah\\
+	Barbara & Jones\\
+	Amy & Ford\\
+	Jimmy & Wang\\
+	John & Smith\\
+	Ricardo & Brown\\
+	Francis & Johnson\\
+	\hline
+\end{tabular}
+\begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{\textcolor[rgb]{1,0,0}{Student $\cap$ Prof}}\\
+	\hline
+	FName & LName\\
+	\hline\hline
+	Susan & Yao\\
+	Ramesh & Shah\\
+	\hline
+\end{tabular}
+\begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{\textcolor[rgb]{1,0,0}{Student - Prof}}\\
+	\hline
+	FName & LName\\
+	\hline\hline
+	Barbara & Jones\\
+	Amy & Ford\\
+	Jimmy & Wang\\
+	\hline
+\end{tabular}
+	
+  
 
   \subsection{Renommage}
   Dans certains cas (voir produit cartésien), il faut renommer certains attributs
   d'une relation. On le fait de la manière suivante :
   $$ \alpha_{originalAttributeName:newAttributeName}(R) $$
+  
+  Exemple:
+  \begin{tabular}{|c|c|c|}
+	\multicolumn{3}{c}{R}\\
+	\hline
+	A & B & C\\
+	\hline\hline
+	1 & a & 1\\
+	2 & a & 1\\
+	3 & c & 2\\
+	4 & d & 2\\
+	\hline
+  \end{tabular}
+  $\rightarrow \alpha_{C,D}(R)$ ou $R(A,B,D)\leftarrow R \rightarrow$
+  \begin{tabular}{|c|c|c|}
+	\hline
+	A& B & \textcolor[rgb]{1,0,0}{D}\\
+	\hline\hline
+	1 & a & 1\\
+	2 & a & 1\\
+	3 & c & 2\\
+	4 & d & 2\\
+	\hline
+  \end{tabular}
 
   \subsection{Produit cartésien}
   Le produit cartésien $R \times S$ associe chaque tuple d'une relation avec tous les tuples
   d'une autre relation. Puisque tous les attributs de chaque relation se retrouvent
   dans le résultat, si certains attributs ont les mêmes noms, il faut les renommer.
+  
+  Exemple:
+  \begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{R}\\
+	\hline
+	A & B\\
+	\hline\hline
+	A1 & B1\\
+	A2 & B2\\
+	\hline
+  \end{tabular}
+  \begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{S}\\
+	\hline
+	C & D\\
+	\hline\hline
+	C1 & D1\\
+	C2 & D2\\
+	\hline
+  \end{tabular}
+  \begin{tabular}{|c|c|c|c|}
+	\multicolumn{4}{c}{\textcolor[rgb]{1,0,0}{R $\times$ S}}\\
+	\hline
+	A & B & C & D\\
+	\hline\hline
+	A1 & B1 & C1 & D1\\
+	A1 & B1 & C2 & D2\\
+	A2 & B2 & C1 & D1\\
+	A2 & B2 & C2 & D2\\
+	\hline
+  \end{tabular}
 
   \subsection{Jointure}
   La jointure (aussi appelée jointure $\theta$) n'est en fait qu'un produit cartésien suivi d'une sélection. 
@@ -435,9 +599,77 @@ relations et qui produisent une relation en sortie.
   N'oublions pas que certains attributs de R ou de S pourraient devoir être renommés.\\
 
   Les notations des paragraphes suivants proviennent de wikipedia :
+  
+  Exemple:
+  \begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{R}\\
+	\hline
+	A & B\\
+	\hline\hline
+	a & b\\
+	c & b\\
+	d & e\\
+	\hline
+  \end{tabular}
+  \begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{S}\\
+	\hline
+	C & D\\
+	\hline\hline
+	b & c\\
+	e & a\\
+	b & d\\
+	\hline
+  \end{tabular}
+  \begin{tabular}{|c|c|c|c|}
+	\multicolumn{4}{c}{\textcolor[rgb]{1,0,0}{R $\bowtie_{B=C}$ S}}\\
+	\hline
+	A & B & C & D\\
+	\hline\hline
+	a & b & b & c\\
+	a & b & b & d\\
+	c & b & b & c\\
+	c & b & b & d\\
+	d & e & e & a\\
+	\hline
+  \end{tabular}
 
   \paragraph{Jointure naturelle} $R \bowtie S$ : pour tous les attributs qui se trouvent en même temps dans R et dans S, on garde les tuples qui ont les mêmes 
   valeurs pour ces attributs dans R et dans S.
+  
+    Exemple:
+  \begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{R}\\
+	\hline
+	A & B\\
+	\hline\hline
+	a & b\\
+	c & b\\
+	d & e\\
+	\hline
+  \end{tabular}
+  \begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{S}\\
+	\hline
+	C & D\\
+	\hline\hline
+	b & c\\
+	e & a\\
+	b & d\\
+	\hline
+  \end{tabular}
+  \begin{tabular}{|c|c|c|}
+	\multicolumn{3}{c}{\textcolor[rgb]{1,0,0}{R $*$ S}}\\
+	\hline
+	A & B & C\\
+	\hline\hline
+	a & b & c\\
+	a & b & d\\
+	c & b & c\\
+	c & b & d\\
+	d & e & a\\
+	\hline
+  \end{tabular}
 
   \paragraph{Equijoin} $R \bowtie_{A=B} S$ : Jointure $\theta$ avec une seule 
   condition qui est une égalité.\\
