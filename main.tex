@@ -346,13 +346,22 @@ On crée une relation pour chaque entité, et une relation avec une clef étrang
 qui référencent les deux autres relations (on passe de 2 à 3 tables).
 
 \paragraph{Attributs multivalués}
+\subparagraph{Avec une relation supplémentaire}
 On traduit une entité $E$ contenant un attribut multivalué en relation $R$.
 On crée une relation contenant une clef étrangère vers la clef primaire de $R$ et
 une des valeurs de l'attribut.
 \begin{figure}[H]
     \center
     \includegraphics[width=.7\textwidth]{fig/multiattrs-1nf.png}
-    \caption{Transformation des attributs multivalués}
+    \caption{Transformation des attributs multivalués en ajoutant une relation}
+\end{figure}
+
+\subparagraph{Avec une seule relation}
+On ajoute une ligne par valeur de l'attribut multivalué pour un même objet.
+\begin{figure}[H]
+    \center
+    \includegraphics[width=.7\textwidth]{fig/multiattrs-single.png}
+    \caption{Transformation des attributs multivalués en une seule relation}
 \end{figure}
 
 \subsubsection{Perte d'information}
