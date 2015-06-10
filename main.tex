@@ -586,7 +586,7 @@ ou encore si
 $$ \not\exists t_1,t_2 ~:~ t_1[X] = t_2[X] $$
 
 Il y a donc une dépendance fonctionnelle de $X$ à $Y$ si tous les tuples égaux
-sur $X$ sont aussi égaux sur $Y$.
+sur $X$ sont aussi égaux sur $Y$. On dit que \textbf{Y dépend de X}.
 
 \begin{figure}[H]
 \center
@@ -614,5 +614,47 @@ Ces formules peuvent être prouvées à partir des formules précédentes
 \subparagraph{Décomposition} $ X \rightarrow YZ \models (X \rightarrow Y) \land (X \rightarrow Z) $
 \subparagraph{Union} $ (X \rightarrow Y) \land (X \rightarrow Z) \models X \rightarrow YZ $
 \subparagraph{Pseudo transitivité} $ (X \rightarrow Y) \land (WY \rightarrow Z) \models WX \rightarrow Z $
+
+\subsubsection{Equivalence et couverture}
+Soit deux ensembles de dépendances fonctionnelles $F$ et $G$.
+\paragraph{Couverture} $F$ couvre $G$ si $(\forall g \in G~:~F \models g)$ (càd $G^+ \subseteq F^+$)
+\paragraph{\'Equivalence} $F$ et $G$ sont équivalents si $F$ couvre $G$ et $G$ couvre $F$ (càd $F^+ = G^+$)
+\paragraph{Ensemble minimal} $F$ est un ensemble de dépendances fonctionelles minimal
+si aucun de ses sous-ensemble n'est équivalent à lui même. On l'appelle aussi la
+couverture minimale.
+
+\subsubsection{Algorithme pour trouver la couverture minimale}
+\begin{enumerate}
+  \item $G := F$
+  \item On remplace chaque dépendance $X \rightarrow \{Y_1,~...~,Y_n\}$ par n dépendances
+        $X \rightarrow Y_1,~...~, X \rightarrow Y_n$ dans $G$
+  \item Pour chaque dépendance $X \rightarrow A$ dans $G$, pour chaque attribut $B$
+        qui est un élément de $X$, si $(G-\{X\rightarrow A\})\cup\{(X-\{B\}) \rightarrow A\}$ est
+        équivalent à $G$, on remplace $X \rightarrow A $ par $(X-\{B\}) \rightarrow A$
+  \item Enlever toutes les dépendances $x = X \rightarrow A$ telle que $G-\{x\}$ est équivalent à $G$ 
+\end{enumerate}
+
+\begin{figure}[H]
+\center
+\includegraphics[width=.6\textwidth]{fig/df-reduction.png}
+\caption{Exemple de réduction à l'ensemble de contraintes minimal}
+\end{figure}
+
+\subsection{Forme normale}
+Une condition (ou contrainte d'intégrité) qui certifie qu'un schéma relationel
+est dans une forme particulière. Plus on monte dans les formes normales, plus petites
+sont les relations, et nécessiteront donc plus de jointures.
+
+\subsubsection{Première forme normale}
+\begin{itemize}
+  \item Les relations sont définies dans le modèle relationnel
+  \item Les attributs composites et multivalués, ainsi que les relations imbriquées
+        sont interdites
+\end{itemize}
+
+\subsubsection{Deuxième forme normale}
+\begin{itemize}
+  \item 
+\end{itemize}
 
 \end{document}
