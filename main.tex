@@ -432,13 +432,19 @@ relations et qui produisent une relation en sortie.
 
   $$R \bowtie_{condition} S = \{concat(r,s)\; |\; r \in R\; \land \; s \in S\; \land \; condition(r,s)\} $$
 
-  N'oublions pas que certains attributs de R ou de S pourraient devoir être renommés.
+  N'oublions pas que certains attributs de R ou de S pourraient devoir être renommés.\\
+
+  Les notations des paragraphes suivants proviennent de wikipedia :
 
   \paragraph{Jointure naturelle} $R \bowtie S$ : pour tous les attributs qui se trouvent en même temps dans R et dans S, on garde les tuples qui ont les mêmes 
   valeurs pour ces attributs dans R et dans S.
 
   \paragraph{Equijoin} $R \bowtie_{A=B} S$ : Jointure $\theta$ avec une seule 
-  condition qui est une égalité.
+  condition qui est une égalité.\\
+
+  L'equijoin tel que très floutement défini dans le cours :
+
+  \paragraph{Equijoin} : $R *_{A=B} S$ quand la condition de join est une simple égalité
 
   \paragraph{Left, Right et Full Outer Join} Flemme de faire le symbole en \LaTeX,
   il faut rajouter deux petits traits horizontaux à gauche, à droite ou au deux
@@ -486,6 +492,7 @@ relations et qui produisent une relation en sortie.
   \end{align*}
 
   \subsubsection{Quantificateur universel}
+  Le quantificateur universel est très utile pour les divisions.
   Il doit toujours être associé avec l'implication. Pourquoi? Prenons l'exemple
   de cours prérequis. On veut tous les étudiants qui ont passé les prérequis
   de Plasticine. Si on a cette formule : $\forall p (Prereq(p) \land \exists etudiant ...$ et que Plasticine n'a aucun prérequis, la formule renvoie un ensemble
