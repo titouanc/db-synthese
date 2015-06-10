@@ -17,7 +17,7 @@
 \maketitle
 \tableofcontents
 
-\section{Modèle entité-relation}
+\section{Modèle entité-association}
 Un schéma conceptuel des données, pas forcément implémenté de cette façon.
 Selon le contexte, désigne la classe (modèle) ou l'objet (l'instance).
 
@@ -49,7 +49,7 @@ Exemple: \texttt{Person.Adress = \{Street, City, State, Zipcode, Country\}}
 \paragraph{Clefs ou identificateurs}
 Attributs ou ensemble d'attributs d'une entité dont les valeurs sont uniques
 (déterminent une et une seule entité). On les met en évidence dans un schéma
-entité-relation en les soulignant, en ajoutant un symbole \textit{clef} à côté,
+entité-association en les soulignant, en ajoutant un symbole \textit{clef} à côté,
 ou en les mettant dans une section à part dans la boîte de l'entité.
 \subparagraph{Clefs primaires}
 Seule l'une des clefs peut être soulignée, et est l'identifiant d'un objet pour
@@ -126,7 +126,7 @@ même clef étrangère.
 
 \subsection{Relation génériques}
 \'Equivalent des design pattern pour les relations. Elle dénotent la nature d'une
-relation sur un schéma entité-relation.
+relation sur un schéma entité-association.
 
 \subsubsection{Classification}
 Utilisée lorsqu'on instancie un objet. Exemple: on a une liste de destinations
@@ -181,7 +181,7 @@ On parle du schéma pour décrire le modèle des données (le nom des colonnes).
 \begin{figure}[H]
     \center
     \includegraphics[width=.5\textwidth]{fig/relmodel-er.png}
-    \caption{\label{fig:relmodel-er}Un modèle Entité-Relation}
+    \caption{\label{fig:relmodel-er}Un modèle entité-association}
 \end{figure}
 \begin{figure}[H]
     \center
@@ -189,7 +189,7 @@ On parle du schéma pour décrire le modèle des données (le nom des colonnes).
     \caption{Les tuples correspondant au schéma Figure \ref{fig:relmodel-er}}
 \end{figure}
 
-Lors de la traduction du modèle entité-relation en modèle relationnel, on voit
+Lors de la traduction du modèle entité-association en modèle relationnel, on voit
 que toutes les relations ne sont pas matérialisées par une table (par exemple,
 un \texttt{Department} contient directement la clef de son manager et sa date d'entrée en service),
 et que certaines tables ne sont pas modélisées par une entité ou une relation, mais
