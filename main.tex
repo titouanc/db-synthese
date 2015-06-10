@@ -543,5 +543,76 @@ relations et qui produisent une relation en sortie.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Normalisation}
+\subsection{Motivation}
+Une bonne conception de base de données peut être obtenue par
+\begin{itemize}
+  \item l'intuition et le savoir-faire du développeur
+  \item une préconception dans un modèle de données plus expressif (ex: E-R)
+  \item par la théorie de normalisation.
+\end{itemize}
+
+Il faut prendre en compte à la fois le niveau logique (clarté de la sémantique et des données,
+facilité de recherche et altération, ...), et le niveau physique (espace de stockage, efficacité d'accès, ...).
+
+\begin{figure}[H]
+\center
+\includegraphics[width=.6\textwidth]{fig/baddesign-norm.png}
+\caption{\label{fig:baddesign-norm} Exemple de mauvaise conception et d'une meilleure normalisation}
+\end{figure}
+
+\`A la Figure \ref{fig:baddesign-norm}, on modélise un employé d'un département.
+Soit on met tout dans une même relation, soit on en fait deux tables. Il y a plusieurs
+inconvénients à tout mettre dans la même table.
+
+\paragraph{Anomalies d'insertion}
+Dans l'exemple ci-dessus, on devrait vérifier, avant d'insérer un élément, que
+les données concernant le département sont cohérentes avec les autres employés
+du même département. Il n'est pas possible de créer un département sans employé,
+puisque le numéro d'employé (\texttt{SSN}) est une clef.
+
+\paragraph{Anomalies de modification et de suppression}
+Si on supprime le dernier employé d'un département, le département n'existe plus
+(peut poser problème si d'autres tables référencent un département). Si on change
+le manager d'un département (\texttt{DMgr}), il faut le modifier dans plusieurs
+lignes, ...
+
+Ces anomalies peuvent mener à des résultats de jointure erronés par exemple.
+
+\subsection{Dépendances fonctionnelles}
+La dépendance fonctionnelle $X \rightarrow Y$ s'applique à la relation $R(A_1, ~...~, A_n)$,
+avec $X,Y \subseteq \{A_1, ..., A_n\}$, si
+$$ \forall t_1,t_2 ~:~ t_1[X] = t_2[X] \rightarrow t_1[Y] = t_2[Y] $$
+ou encore si
+$$ \not\exists t_1,t_2 ~:~ t_1[X] = t_2[X] $$
+
+Il y a donc une dépendance fonctionnelle de $X$ à $Y$ si tous les tuples égaux
+sur $X$ sont aussi égaux sur $Y$.
+
+\begin{figure}[H]
+\center
+\includegraphics[width=.48\textwidth]{fig/df-ex1.png}
+\includegraphics[width=.48\textwidth]{fig/df-ex2.png}
+\caption{Exemples de dépendances fonctionnelles}
+\end{figure}
+
+\subsubsection{Inférence de nouvelles dépendances fonctionnelles}
+Seules les dépendances les plus évidentes sont explicitement spécifiées, mais on
+peut en déduire d'autres à partir de celles-ci par déduction formelle.
+
+\paragraph{La closure} $F^+$ d'un ensemble de dépendances $F$ est l'ensemble des
+dépendances qu'on peut inférer de $F$.
+$$ X \rightarrow Y \in F^+ \Leftrightarrow F \models X \rightarrow Y $$
+
+\paragraph{Règles d'inférence d'Armstrong}
+Ces formules peuvent être prouvées à l'aide de la définition des dépendances.
+\subparagraph{Réflexivité} $ Y \subseteq X \models X \rightarrow Y $
+\subparagraph{Augmentation} $ X \rightarrow Y \models XZ \rightarrow YZ $ (et $ XZ \rightarrow Y$)
+\subparagraph{Transitivité} $ (X \rightarrow Y) \land (Y \rightarrow Z) \models X \rightarrow Z $
+
+\paragraph{Formules dérivées}
+Ces formules peuvent être prouvées à partir des formules précédentes
+\subparagraph{Décomposition} $ X \rightarrow YZ \models (X \rightarrow Y) \land (X \rightarrow Z) $
+\subparagraph{Union} $ (X \rightarrow Y) \land (X \rightarrow Z) \models X \rightarrow YZ $
+\subparagraph{Pseudo transitivité} $ (X \rightarrow Y) \land (WY \rightarrow Z) \models WX \rightarrow Z $
 
 \end{document}
