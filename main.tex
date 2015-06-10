@@ -10,6 +10,26 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{color}
+\usepackage{listings}
+
+\lstset{
+  language=SQL,
+  basicstyle=\ttfamily\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  commentstyle=\color{cyan},    % comment style
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+  keywordstyle=\color{blue},       % keyword style
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{blue}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=5,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{red},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+}
 
 \author{Titouan \bsc{Christophe}\\Florentin \bsc{Hennecker}\\Rodrigue \bsc{Van Brande}}
 \title{Synthèse de bases de données}
@@ -772,6 +792,37 @@ relations et qui produisent une relation en sortie.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{SQL}
+\textit{Note: cette partie n'est que sommaire, puisqu'elle a été étudiée en détail dans le projet}
+
+La forme générale d'une requête SQL est \texttt{SELECT attributes FROM relations WHERE condition}.
+
+L'opérateur \texttt{SELECT x1 FROM x2} est équivalent à $\pi_{x_1}(\sigma(x_2))$ en algèbre relationelle.
+L'opérateur \texttt{WHERE} est équivalent à une $\sigma$.
+
+\subsection{Aggrégation}
+SQL propose des fonctions d'aggrégation, optimisées algorithmiquement (mais pas
+nécessairement relationellement). On peut par exemple \texttt{SELECT SUM(salary) FROM employees;}.
+L'opérateur \texttt{GROUP BY} permet de grouper les éléments d'un résultat. En lui ajoutant une
+clause \texttt{HAVING}, on peut spécifier des options au regroupement.
+
+\subsection{Ordre opérationnel}
+Dans le cas d'une requête complète
+\begin{lstlisting}
+SELECT ...
+FROM ...
+WHERE condition1
+GROUP BY attribut(s)
+HAVING condition2
+\end{lstlisting}
+
+\begin{enumerate}
+  \item \'Evaluation du \texttt{SELECT ... FROM ... WHERE ...} sans la partie
+        \texttt{SELECT}
+  \item Partition du résultat dans les différentes classes pour chaque attribut
+        apparaissant dans le \texttt{GROUP BY}
+  \item Application du \texttt{HAVING} à chaque classe aggrégée
+  \item Exécution du \texttt{SELECT}
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -905,7 +956,7 @@ où toutes les clefs sont des attributs simples est automatiquement en 2FN.
 $(X \rightarrow Y) \land (Y \rightarrow Z)$ (où $Z$ n'est pas un sous ensemble de la clef).
 \paragraph{3 définitions pour qu'une relation $R$ soit en 3FN}
 \begin{itemize}
-  \item $R$ est en 2FN et tous les attributs non-premiers dépendent transitivement d'une clef
+  \item $R$ est en 2FN et tous les attributs non-premiers dépendent transitivement d'une super-clef
   \item Pour toutes les dépendances $X \rightarrow A \in F^+$, $X$ est une clef ou $A$ est un attribut premier
   \item Tous les attributs non-premier sont entièrement dépendants de chaque clef
         et ne sont pas transitivement dépendant de chaque clef
@@ -930,5 +981,28 @@ entière et seulement la clef.
 \includegraphics[width=.38\textwidth]{fig/bcnf-ex2.png}
 \caption{Exemple de raffinement successif en formes normales}
 \end{figure}
+
+\begin{figure}[H]
+\center
+\includegraphics[width=.5\textwidth]{fig/bcnf-contre.png}
+\caption{Contre-Exemple de BCNF}
+\end{figure}
+
+\subsubsection{Quatrième forme normale}
+\paragraph{Dépendance multivaluée} Une dépendance $X \rightarrow\rightarrow Y$
+est multivaluée si on peut définir un ensemble de valeurs admissibles pour $Y$
+pour $X$ connu.
+
+Une dépendance multivaluée triviale est le cas particulier $X \subseteq Y$.
+
+\paragraph{Définition}
+Une relation est en 4NF si elle est en 3NF et que pour chacune de ses
+dépendances multivaluées non triviales $X \rightarrow\rightarrow Y$, $X$ est
+une super-clef.
+
+\subsubsection{Cinquième forme normale}
+Une relation est en 5NF si elle est en 4NF et qu'il n'est plus possible de la
+décomposer sans perte d'informations.
+
 
 \end{document}
