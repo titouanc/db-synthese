@@ -917,4 +917,18 @@ $(X \rightarrow Y) \land (Y \rightarrow Z)$ (où $Z$ n'est pas un sous ensemble 
 \caption{Exemple de mise en troisième forme normale}
 \end{figure}
 
+\subsubsection{Forme normale de Boyce-Codd (BCNF)}
+LA forme de Boyce-Codd est une troisième forme normale améliorée, où toutes les
+dépendances résultent des clefs. Une relation à 2 attributs est d'office en
+BCNF. 
+
+\paragraph{Intuition de la BCNF} Les dépendances fonctionelles concernent la clef,
+entière et seulement la clef.
+\begin{figure}[H]
+\center
+\includegraphics[width=.5\textwidth]{fig/bcnf-ex1.png}
+\includegraphics[width=.38\textwidth]{fig/bcnf-ex2.png}
+\caption{Exemple de raffinement successif en formes normales}
+\end{figure}
+
 \end{document}
