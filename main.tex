@@ -653,8 +653,35 @@ sont les relations, et nécessiteront donc plus de jointures.
 \end{itemize}
 
 \subsubsection{Deuxième forme normale}
+\paragraph{Une dépendance entièrement fonctionelle} est une dépendance fonctionelle
+$X \rightarrow Z$ telle que la suppression de n'importe quel attribut de $X$ invalide
+la dépendance.
+\paragraph{Un attribut premier} est un attribut qui est membre d'une clef.
+\paragraph{Définition} Une relation $R$ est en deuxième forme normale si tout
+attribut non-premier dépend entièrement d'une clef. On peut remarquer qu'une relation
+où toutes les clefs sont des attributs simples est automatiquement en 2FN.
+
+\begin{figure}[H]
+\center
+\includegraphics[width=.6\textwidth]{fig/2fn-ex.png}
+\caption{Exemple de mise en deuxième forme normale}
+\end{figure}
+
+\subsubsection{Troisième forme normale}
+\paragraph{Une dépendance transitive} $X \rightarrow Z$ est décomposable en
+$(X \rightarrow Y) \land (Y \rightarrow Z)$ (où $Z$ n'est pas un sous ensemble de la clef).
+\paragraph{3 définitions pour qu'une relation $R$ soit en 3FN}
 \begin{itemize}
-  \item 
+  \item $R$ est en 2FN et tous les attributs non-premiers dépendent transitivement d'une clef
+  \item Pour toutes les dépendances $X \rightarrow A \in F^+$, $X$ est une clef ou $A$ est un attribut premier
+  \item Tous les attributs non-premier sont entièrement dépendants de chaque clef
+        et ne sont pas transitivement dépendant de chaque clef
 \end{itemize}
+
+\begin{figure}[H]
+\center
+\includegraphics[width=.6\textwidth]{fig/3fn-ex.png}
+\caption{Exemple de mise en troisième forme normale}
+\end{figure}
 
 \end{document}
