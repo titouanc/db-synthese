@@ -324,9 +324,42 @@ complexes (en O(n) de la profondeur de l'arbre d'héritage).
     \includegraphics[width=.9\textwidth]{fig/er2rm-3.png}
 \end{figure}
 
-\paragraph{Traduction des entités et relations en tables} les attributs deviennent
-des colonnes, faire attention aux attributs multivalués, les entité fortes et faibles.
-Les relations doivent se traduire par des 
+\subsubsection{Règles de traduction}
+\paragraph{Entités}
+Pour toutes les entités non-faibles $E$ créer une relation $R$ qui a tous les attributs
+de $E$. On identifie les clefs, et les attributs composites sont stocké champ par champ.
+
+\paragraph{Entité faibles}
+Création d'une relation $R$ pour chaque entité faible $E$, contenant tous ses
+attributs simples, et les clefs des entités référencées comme clefs étrangères.
+
+\paragraph{Relation one-to-one}
+Choisir une des deux entité comme faible, et y insérer une clef étrangère qui
+est la clef primaire de l'autre.
+
+\paragraph{Relation one-to-many}
+L'entité du côté many est transformée en une relation $R$ possèdant une clef étrangère
+qui référence la clef primaire de l'autre relation
+
+\paragraph{Relation many-to-many}
+On crée une relation pour chaque entité, et une relation avec une clef étrangère
+qui référencent les deux autres relations (on passe de 2 à 3 tables).
+
+\paragraph{Attributs multivalués}
+On traduit une entité $E$ contenant un attribut multivalué en relation $R$.
+On crée une relation contenant une clef étrangère vers la clef primaire de $R$ et
+une des valeurs de l'attribut.
+\begin{figure}[H]
+    \center
+    \includegraphics[width=.7\textwidth]{fig/multiattrs-1nf.png}
+    \caption{Transformation des attributs multivalués}
+\end{figure}
+
+\subsubsection{Perte d'information}
+La traduction amène à une perte de précision: une relation (dans le modèle relationnel)
+peut traduire plusieurs entités et relations du modèle E-R. Une bonne correspondance
+entre les deux modèle nécessite des bonnes contraintes d'intégrité et référentielles,
+ainsi qu'une documentation mettant le modèle E-R en relation avec la structure relationelle.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
