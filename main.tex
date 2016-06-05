@@ -31,7 +31,7 @@
   tabsize=2,                       % sets default tabsize to 2 spaces
 }
 
-\author{Titouan \bsc{Christophe}\\Florentin \bsc{Hennecker}\\Rodrigue \bsc{Van Brande}}
+\author{Titouan \bsc{Christophe}\\Florentin \bsc{Hennecker}\\Rodrigue \bsc{Van Brande}\\Loïs \bsc{Postula}}
 \title{Synthèse de bases de données}
 \date{\today}
 
@@ -675,7 +675,7 @@ relations et qui produisent une relation en sortie.
   \begin{tabular}{|c|c|}
 	\multicolumn{2}{c}{S}\\
 	\hline
-	C & D\\
+	B & C\\
 	\hline\hline
 	b & c\\
 	e & a\\
@@ -697,14 +697,141 @@ relations et qui produisent une relation en sortie.
 
   \paragraph{Equijoin} $R \bowtie_{A=B} S$ : Jointure $\theta$ avec une seule 
   condition qui est une égalité.\\
+  
+  
+    Exemple:
+  \begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{R}\\
+	\hline
+	A & B\\
+	\hline\hline
+	a & b\\
+	c & b\\
+	d & e\\
+	\hline
+  \end{tabular}
+  \begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{S}\\
+	\hline
+	C & D\\
+	\hline\hline
+	b & c\\
+	e & a\\
+	b & d\\
+	\hline
+  \end{tabular}
+  \begin{tabular}{|c|c|c|c|}
+	\multicolumn{4}{c}{\textcolor[rgb]{1,0,0}{$R \bowtie_{B=C} S$}}\\
+	\hline
+	A & B & C & D\\
+	\hline\hline
+	a & b & b & c\\
+	a & b & b & d\\
+	c & b & b & c\\
+	c & b & b & d\\
+	d & e & e & a\\
+	\hline
+  \end{tabular}
 
-  L'equijoin tel que très floutement défini dans le cours :
-
-  \paragraph{Equijoin} : $R *_{A=B} S$ quand la condition de join est une simple égalité
-
-  \paragraph{Left Outer Join} $\sqsupset\,\bowtie$
-  \paragraph{Right Outer Join} $\bowtie\,\sqsubset$
-  \paragraph{Full Outer Join} $\sqsupset\,\bowtie\,\sqsubset$
+  \paragraph{Left Outer Join} $\sqsupset\,\bowtie$ : Jointure $\theta$ ou seul les tuples de gauche sans correspondances
+  sont gardées (les valeurs pour les attributs de la table de droite sont mise à NULL ($\omega$).\\
+  
+    Exemple:
+  \begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{R}\\
+	\hline
+	A & B\\
+	\hline\hline
+	a & b\\
+	c & b\\
+	d & e\\
+	\hline
+  \end{tabular}
+  \begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{S}\\
+	\hline
+	B & C\\
+	\hline\hline
+	b & c\\
+	\hline
+  \end{tabular}
+  \begin{tabular}{|c|c|c|}
+	\multicolumn{3}{c}{\textcolor[rgb]{1,0,0}{$R \sqsupset\, \bowtie S$}}\\
+	\hline
+	A & B & C\\
+	\hline\hline
+	a & b & c\\
+	c & b & c\\
+	d & e & $\omega$\\
+	\hline
+  \end{tabular}
+  
+  \paragraph{Right Outer Join} $\bowtie\,\sqsubset$ : Jointure $\theta$ ou seul les tuples de droite sans correspondances
+  sont gardées (les valeurs pour les attributs de la table de gauche sont mise à NULL ($\omega$).\\
+  
+    Exemple:
+  \begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{R}\\
+	\hline
+	A & B\\
+	\hline\hline
+	a & b\\
+	c & b\\
+	\hline
+  \end{tabular}
+  \begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{S}\\
+	\hline
+	B & C\\
+	\hline\hline
+	b & c\\
+	e & f\\
+	\hline
+  \end{tabular}
+  \begin{tabular}{|c|c|c|}
+	\multicolumn{3}{c}{\textcolor[rgb]{1,0,0}{$R \bowtie\, \sqsubset S$}}\\
+	\hline
+	A & B & C\\
+	\hline\hline
+	a & b & c\\
+	c & b & c\\
+	$\omega$ & e & f\\
+	\hline
+  \end{tabular}
+  \paragraph{Full Outer Join} $\sqsupset\,\bowtie\,\sqsubset$: Jointure $\theta$ combinant le \emph{Left Outer Join} et le \emph{Right Outer Join},
+  Toutes les tuples n'ayant pas de correspondance, à gauche, ou à droite, sont aussi retranscrit avec les valeurs NULL ($\omega$) pour les correspondances.
+  
+    Exemple:
+  \begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{R}\\
+	\hline
+	A & B\\
+	\hline\hline
+	a & b\\
+	c & b\\
+	c & d\\
+	\hline
+  \end{tabular}
+  \begin{tabular}{|c|c|}
+	\multicolumn{2}{c}{S}\\
+	\hline
+	B & C\\
+	\hline\hline
+	b & c\\
+	e & f\\
+	\hline
+  \end{tabular}
+  \begin{tabular}{|c|c|c|}
+	\multicolumn{3}{c}{\textcolor[rgb]{1,0,0}{$R \sqsupset\,\bowtie\,\sqsubset S$}}\\
+	\hline
+	A & B & C\\
+	\hline\hline
+	a & b & c\\
+	c & b & c\\
+	c & d & $\omega$\\
+	$\omega$ & e & f\\
+	\hline
+  \end{tabular}  
 
   \subsection{Division}
   $$ R(A,B)\; \div\; S(B) $$
